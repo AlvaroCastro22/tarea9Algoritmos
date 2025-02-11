@@ -51,7 +51,7 @@ void cargarPosts(Nodo *&h){
     lecturaF.close();
 }
 
-void cargarReviews(){
+void cargarReviews(Nodo *&h){
     ifstream lecturaF;
     string linea;
     string palabra;
@@ -86,18 +86,50 @@ void cargarReviews(){
                     
                 }
                 arr.push_back(valor);
-
+                Review re = {arr[0],arr[1],arr[2],arr[3]};
                 
+                asignarReview(h,re);
                 
     }
     
     lecturaF.close();
 }
+
 int main(){
     Nodo *head = NULL;
     cargarPosts(head);
-    cargarReviews();
-    reportarLista(head);
+    cargarReviews(head);
+
+    int opcion;
+
+    do
+    {
+        cout<<endl;
+        cout<<"Elegir una opcion"<<endl;
+        cout<<"1)Mostrar los posts"<<endl;
+        cout<<"2)Mostrar reviews de un post"<<endl;
+        cout<<"3)Salir"<<endl;
+        cin>>opcion;
+        switch (opcion)
+        {
+        case 1:
+            reportarLista(head);
+            break;
+        case 2:{
+            string id;
+            cout<<"Escribe el id a buscar"<<endl;
+            cin.ignore();
+            getline(cin,id);
+            reportarReviewPost(head,id);
+            break;
+                }
+            
+        default:
+            break;
+        }
+    } while (opcion!=3);
+    
+    
     
 
     return 0;
