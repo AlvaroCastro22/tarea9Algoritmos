@@ -42,16 +42,19 @@ string fechaColecta;
 string idAirbnb;
 string nReview;
 string reseña;
-Review *sigReview;
+Review *sigReview=NULL;
+Review(string fecha, string id, string nRev, string res)
+        : fechaColecta(fecha), idAirbnb(id), nReview(nRev), reseña(res), sigReview(nullptr) {}
 };
 // Clase Nodo
 class Nodo {
-protected:
+
     Post data;   // Datos del Post
     Nodo *sig;     // Apuntador al siguiente nodo
-    Review *res;
+    
 
 public:
+    Review *res;
     Nodo() {}
     Nodo(Post e);
     Nodo(Post e, Nodo *s);
@@ -128,6 +131,32 @@ void eliminarNodo(Nodo *&head, const string &id) {
     }
 }
 
+void asignarReview(Nodo *&head,Review r){
+    Nodo *aux = head;
+    while (aux != NULL) {
+        if (aux->get_data().idAirbnb==r.idAirbnb)
+        {
+            Review *headReview = new Review(r);
+            
+            if (aux->res == NULL) {
+                aux->res = headReview;
+            } else {
+                Review *aux2 = aux->res;
+                while (aux2->sigReview != NULL) {
+                    aux2 = aux2->sigReview;
+                }
+                aux2->sigReview=headReview;
+            }
+            //cout<<aux->res<<endl;
+            //cout<<aux->res->sigReview<<endl;
+            return;
+        }
+        
+
+        aux = aux->get_sig();
+    }
+    cout << "Id no coincide." << endl;
+}
 
 void buscarNodo(Nodo *head, const string &id) {
     Nodo *aux = head;
@@ -181,13 +210,40 @@ void reportarLista(Nodo *head) {
     cout << "\nEventos en la lista:" << endl;
     while (aux != NULL) {
         Post e = aux->get_data();
-        cout << "\nNombre: " << e.ciudad << endl;
+        cout<<endl<<"Id post:"<<e.idAirbnb<<endl;
+        cout << "Nombre: " << e.ciudad << endl;
         cout << "Tipo: " << e.distrito << endl;
         cout << "Fecha: " << e.fechaColecta << endl;
         cout<<"Alias: "<<e.alias<<endl;
+        //cout<<"puntero review"<<aux->res<<endl;
         
         aux = aux->get_sig();
     }
+}
+
+void reportarReviewPost(Nodo *head,string id){
+    Nodo *aux = head;
+    
+    while (aux != NULL) {
+        if (aux->get_data().idAirbnb == id) {
+            cout<<endl<<"Reviews del post con id "<<id<<endl;
+            Post e = aux->get_data();
+            
+            Review *aux2 = aux->res;
+            while (aux2 !=NULL)
+            {
+                cout<<endl<<aux2->nReview<<endl;
+                cout<<aux2->fechaColecta<<endl;
+                cout<<aux2->reseña<<endl;
+                cout<<"----"<<endl;
+                aux2 = aux2->sigReview;
+            }
+            
+            return;
+        }
+        aux = aux->get_sig();
+    }
+    cout << "Evento no encontrado." << endl;
 }
 
 #endif
