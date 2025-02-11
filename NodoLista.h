@@ -37,12 +37,19 @@ struct Post {
     string DisponibilidadMayor90;
 };
 
+struct Review{
+string fechaColecta;
+string idAirbnb;
+string nReview;
+string reseña;
+Review *sigReview;
+};
 // Clase Nodo
 class Nodo {
 protected:
     Post data;   // Datos del Post
     Nodo *sig;     // Apuntador al siguiente nodo
-
+    Review *res;
 
 public:
     Nodo() {}
@@ -63,6 +70,7 @@ public:
 Nodo::Nodo(Post e) {
     data = e;
     sig = NULL;
+    res = NULL;
 }
 
 // Constructor Nodo (con siguiente nodo)
@@ -176,6 +184,7 @@ void reportarLista(Nodo *head) {
         cout << "\nNombre: " << e.ciudad << endl;
         cout << "Tipo: " << e.distrito << endl;
         cout << "Fecha: " << e.fechaColecta << endl;
+        cout<<"Alias: "<<e.alias<<endl;
         
         aux = aux->get_sig();
     }
