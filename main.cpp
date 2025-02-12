@@ -3,6 +3,7 @@
 #include<sstream>
 #include "NodoLista.h"
 #include <vector>
+
 using namespace std;    
 
 
@@ -11,17 +12,17 @@ void cargarPosts(Nodo *&h){
     ifstream lecturaF;
     string linea;
     string palabra;
-    string nombre = "datos.csv";
+    string nombre = "posts.csv";
     lecturaF.open(nombre,ios::in);
     if(lecturaF.fail()){
         cout<<"No se puede abrir el archivo";
+        return;
         
     }
     while (!lecturaF.eof())
     {
         Post p;
         vector<string> arr;
-        int i = 0;
         string valor;
         bool entreComillas = false;
         getline(lecturaF,linea);
@@ -59,13 +60,12 @@ void cargarReviews(Nodo *&h){
     lecturaF.open(nombre,ios::in);
     if(lecturaF.fail()){
         cout<<"No se puede abrir el archivo";
-        
+        return;
     }
     while (!lecturaF.eof())
     {
         //Post p;
         vector<string> arr;
-        int i = 0;
         string valor;
         bool entreComillas = false;
         getline(lecturaF,linea);
@@ -107,8 +107,9 @@ int main(){
         cout<<endl;
         cout<<"Elegir una opcion"<<endl;
         cout<<"1)Mostrar los posts"<<endl;
-        cout<<"2)Mostrar reviews de un post"<<endl;
-        cout<<"3)Salir"<<endl;
+        cout<<"2)Mostrar mas informacion de un post"<<endl;
+        cout<<"3)Mostrar reviews de un post"<<endl;
+        cout<<"4)Salir"<<endl;
         cin>>opcion;
         switch (opcion)
         {
@@ -120,14 +121,21 @@ int main(){
             cout<<"Escribe el id a buscar"<<endl;
             cin.ignore();
             getline(cin,id);
+            buscarNodo(head,id);
+            break;
+                }
+        case 3:{
+            string id;
+            cout<<"Escribe el id a buscar"<<endl;
+            cin.ignore();
+            getline(cin,id);
             reportarReviewPost(head,id);
             break;
                 }
-            
         default:
             break;
         }
-    } while (opcion!=3);
+    } while (opcion!=4);
     
     
     
