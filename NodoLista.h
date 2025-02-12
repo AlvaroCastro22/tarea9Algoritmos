@@ -46,11 +46,11 @@ Review *sigReview=NULL;
 Review(string fecha, string id, string nRev, string res)
         : fechaColecta(fecha), idAirbnb(id), nReview(nRev), reseña(res), sigReview(nullptr) {}
 };
-// Clase Nodo
+
 class Nodo {
 
-    Post data;   // Datos del Post
-    Nodo *sig;     // Apuntador al siguiente nodo
+    Post data;   
+    Nodo *sig;     
     
 
 public:
@@ -69,20 +69,20 @@ public:
     void set_sig(Nodo *p);
 };
 
-// Constructor Nodo (sin siguiente nodo)
+
 Nodo::Nodo(Post e) {
     data = e;
     sig = NULL;
     res = NULL;
 }
 
-// Constructor Nodo (con siguiente nodo)
+
 Nodo::Nodo(Post e, Nodo *s) {
     data = e;
     sig = s;
 }
 
-// Métodos Get y Set
+
 Post Nodo::get_data() { return data; }
 void Nodo::set_data(Post e) { data = e; }
 
@@ -105,31 +105,7 @@ void addNodo(Nodo *&head, Post e) {
 }
 
 
-void eliminarNodo(Nodo *&head, const string &id) {
-    if (head == NULL) {
-        cout << "Lista vacía." << endl;
-        return;
-    }
-    Nodo *aux = head;
-    Nodo *prev = NULL;
 
-    while (aux != NULL && aux->get_data().idAirbnb != id) {
-        prev = aux;
-        aux = aux->get_sig();
-    }
-
-    if (aux == NULL) {
-        cout << "Evento no encontrado." << endl;
-    } else {
-        if (prev == NULL) {
-            head = aux->get_sig();
-        } else {
-            prev->set_sig(aux->get_sig());
-        }
-        delete aux;
-        cout << "Evento eliminado con éxito." << endl;
-    }
-}
 
 void asignarReview(Nodo *&head,Review r){
     Nodo *aux = head;
@@ -163,11 +139,34 @@ void buscarNodo(Nodo *head, const string &id) {
     while (aux != NULL) {
         if (aux->get_data().idAirbnb == id) {
             Post e = aux->get_data();
-            cout << "\nEvento encontrado:" << endl;
-            cout << "Nombre: " << e.ciudad << endl;
-            cout << "Tipo: " << e.distrito << endl;
-            cout << "Fecha: " << e.fechaColecta << endl;
+            cout << "\nPost encontrado:" << endl;
+            cout << "Ciudad: " << e.ciudad << endl;
+            cout << "Distrito: " << e.distrito << endl;
+            cout << "Fecha Colecta: " << e.fechaColecta << endl;
             cout << "ID: " << e.idAirbnb << endl;
+            cout<<"Numero Reviews: "<<e.nReviews<<endl;
+            cout<<"Alias: "<<e.alias<<endl;
+            cout<<"Url: "<<e.url<<endl;
+            cout<<"Titulo: "<<e.titulo<<endl;
+            cout << "Titulo Propiedad: " << e.tituloPropiedad << endl;
+            cout << "Resumen: " << e.resumen << endl;
+            cout << "Reconocimiento: " << e.reconocimiento << endl;
+            cout << "Acerca de: " << e.acercaDe << endl;
+            cout << "Es Super Host: " << e.esSuperHost << endl;
+            cout << "Tiempo Host: " << e.tiempoHost << endl;
+            cout << "Identidad Host: " << e.identidadHost << endl;
+            cout << "Foto del Host: " << e.hostfoto << endl;
+            cout << "Ubicacion Exacta: " << e.ubicacionExacta << endl;
+            cout << "Tipo de Cama: " << e.tipoCama << endl;
+            cout << "Numero de Cuartos: " << e.nCuartos << endl;
+            cout << "Tipo de Alojamiento: " << e.tipoAlojamiento << endl;
+            cout << "Numero de Servicios: " << e.numeroServicios << endl;
+            cout << "Promedio de Reviews: " << e.promedioReviews << endl;
+            cout << "Precio por Noche: " << e.precioPorNoche << endl;
+            cout << "Instant Bookable: " << e.instantBookable << endl;
+            cout << "Politica de Cancelacion: " << e.politicaCancelacion << endl;
+            cout << "Verificar Telefono: " << e.verificarTelefono << endl;
+            cout << "Disponibilidad Mayor a 90 dias: " << e.DisponibilidadMayor90 << endl;
             return;
         }
         aux = aux->get_sig();
@@ -176,34 +175,12 @@ void buscarNodo(Nodo *head, const string &id) {
 }
 
 
-void modificarNodo(Nodo *head, const string &id) {
-    Nodo *aux = head;
-    while (aux != NULL) {
-        if (aux->get_data().idAirbnb == id) {
-            Post e = aux->get_data();
-            cout << "\nIngrese nuevo nombre: ";
-            cin.ignore();
-            getline(cin, e.ciudad);
 
-            cout << "Ingrese nuevo tipo: ";
-            getline(cin, e.distrito);
-
-            cout << "Ingrese nueva fecha: ";
-            getline(cin, e.fechaColecta);
-
-            aux->set_data(e);
-            cout << "Evento modificado con éxito." << endl;
-            return;
-        }
-        aux = aux->get_sig();
-    }
-    cout << "Evento no encontrado." << endl;
-}
 
 
 void reportarLista(Nodo *head) {
     if (head == NULL) {
-        cout << "Lista vacía." << endl;
+        cout << "Lista vacia." << endl;
         return;
     }
     Nodo *aux = head;
@@ -211,9 +188,10 @@ void reportarLista(Nodo *head) {
     while (aux != NULL) {
         Post e = aux->get_data();
         cout<<endl<<"Id post:"<<e.idAirbnb<<endl;
-        cout << "Nombre: " << e.ciudad << endl;
-        cout << "Tipo: " << e.distrito << endl;
-        cout << "Fecha: " << e.fechaColecta << endl;
+        cout << "Ciudad: " << e.ciudad << endl;
+        cout << "Distrito: " << e.distrito << endl;
+        cout << "Titulo Propiedad: " << e.titulo << endl;
+        cout<<"Resumen: "<<e.resumen<<endl;
         cout<<"Alias: "<<e.alias<<endl;
         //cout<<"puntero review"<<aux->res<<endl;
         
@@ -243,7 +221,7 @@ void reportarReviewPost(Nodo *head,string id){
         }
         aux = aux->get_sig();
     }
-    cout << "Evento no encontrado." << endl;
+    cout << "Review no encontrado." << endl;
 }
 
 #endif
